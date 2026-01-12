@@ -433,7 +433,7 @@ The API returns appropriate HTTP status codes:
 ## Project Structure
 
 ```
-respondio/
+note-taker/
 ├── config/
 │   └── database.js          # Sequelize configuration
 ├── src/
