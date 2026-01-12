@@ -12,12 +12,16 @@ const {
 router.use(authenticate);
 
 // Routes
-router.post("/", createNoteValidation, noteController.createNote);
-router.get("/", cacheMiddleware(300), noteController.getAllNotes);
+router
+  .route("/")
+  .post(createNoteValidation, noteController.createNote)
+  .get(cacheMiddleware(300), noteController.getAllNotes);
+router
+  .route("/:id")
+  .get(cacheMiddleware(300), noteController.getNoteById)
+  .put(updateNoteValidation, noteController.updateNote)
+  .delete(noteController.deleteNote);
 router.get("/search", cacheMiddleware(300), noteController.searchNotes);
-router.get("/:id", cacheMiddleware(300), noteController.getNoteById);
-router.put("/:id", updateNoteValidation, noteController.updateNote);
-router.delete("/:id", noteController.deleteNote);
 router.post("/:id/revert", noteController.revertToVersion);
 router.post("/:id/share", noteController.shareNote);
 router.post(
