@@ -489,7 +489,3 @@ respondio/
 ## License
 
 ISC
-
-## Author
-
-Built as a take-home task for Respond.io
