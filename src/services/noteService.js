@@ -42,11 +42,17 @@ class NoteService {
    * Get all notes for a user (including shared notes)
    */
   async getAllNotes(userId) {
-    // Get notes owned by user
-    const ownedNotes = await Note.findAll({
+    const { Op } = require("sequelize");
+
+    const notes = await Note.findAll({
       where: {
-        userId,
         deletedAt: null,
+        [Op.or]: [
+          { userId },
+          {
+            "$shares.sharedWithUserId$": userId,
+          },
+        ],
       },
       include: [
         {
@@ -68,45 +74,10 @@ class NoteService {
         },
       ],
       order: [["createdAt", "DESC"]],
+      distinct: true, // Important: prevents duplicate rows from JOIN
     });
 
-    // Get notes shared with user
-    const sharedNotes = await Note.findAll({
-      where: {
-        deletedAt: null,
-      },
-      include: [
-        {
-          model: User,
-          as: "owner",
-          attributes: ["id", "username", "email"],
-        },
-        {
-          model: NoteShare,
-          as: "shares",
-          where: { sharedWithUserId: userId },
-          required: true,
-          include: [
-            {
-              model: User,
-              as: "sharedWithUser",
-              attributes: ["id", "username", "email"],
-            },
-          ],
-        },
-      ],
-      order: [["createdAt", "DESC"]],
-    });
-
-    // Combine and deduplicate
-    const noteMap = new Map();
-    [...ownedNotes, ...sharedNotes].forEach((note) => {
-      if (!noteMap.has(note.id)) {
-        noteMap.set(note.id, note);
-      }
-    });
-
-    return Array.from(noteMap.values());
+    return notes;
   }
 
   /**
