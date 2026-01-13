@@ -16,12 +16,12 @@ router
   .route("/")
   .post(createNoteValidation, noteController.createNote)
   .get(cacheMiddleware(300), noteController.getAllNotes);
+router.get("/search", cacheMiddleware(300), noteController.searchNotes);
 router
   .route("/:id")
   .get(cacheMiddleware(300), noteController.getNoteById)
   .put(updateNoteValidation, noteController.updateNote)
   .delete(noteController.deleteNote);
-router.get("/search", cacheMiddleware(300), noteController.searchNotes);
 router.post("/:id/revert", noteController.revertToVersion);
 router.post("/:id/share", noteController.shareNote);
 router.post(
