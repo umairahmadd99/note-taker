@@ -89,7 +89,7 @@ describe("NoteService", () => {
         version: 1,
         changedBy: 1,
       });
-      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/notes*:1");
+      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/v1/notes*:1");
       expect(result).toEqual(mockNote);
     });
   });
@@ -217,7 +217,7 @@ describe("NoteService", () => {
       expect(mockNote.save).toHaveBeenCalled();
       expect(NoteVersion.create).toHaveBeenCalled();
       expect(mockTransaction.commit).toHaveBeenCalled();
-      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/notes*:1");
+      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/v1/notes*:1");
     });
 
     it("should throw error if version mismatch (optimistic locking)", async () => {
@@ -306,7 +306,7 @@ describe("NoteService", () => {
         },
       });
       expect(mockNote.destroy).toHaveBeenCalled();
-      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/notes*:1");
+      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/v1/notes*:1");
       expect(result).toEqual({ message: "Note deleted successfully" });
     });
 
@@ -370,7 +370,7 @@ describe("NoteService", () => {
       expect(mockNote.save).toHaveBeenCalled();
       expect(NoteVersion.create).toHaveBeenCalled();
       expect(mockTransaction.commit).toHaveBeenCalled();
-      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/notes*:1");
+      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/v1/notes*:1");
     });
 
     it("should throw error if version not found", async () => {
@@ -436,8 +436,8 @@ describe("NoteService", () => {
       expect(Note.findOne).toHaveBeenCalled();
       expect(User.findByPk).toHaveBeenCalledWith(2);
       expect(NoteShare.findOrCreate).toHaveBeenCalled();
-      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/notes*:1");
-      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/notes*:2");
+      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/v1/notes*:1");
+      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/v1/notes*:2");
     });
 
     it("should throw error if trying to share with yourself", async () => {
@@ -513,7 +513,7 @@ describe("NoteService", () => {
         fileSize: 1024,
         filePath: "/uploads/test-file.jpg",
       });
-      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/notes*:1");
+      expect(invalidateCache).toHaveBeenCalledWith("cache:/api/v1/notes*:1");
       expect(result).toEqual(mockAttachment);
     });
 

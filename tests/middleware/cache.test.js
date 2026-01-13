@@ -13,7 +13,7 @@ describe("Cache Middleware", () => {
   beforeEach(() => {
     req = {
       method: "GET",
-      originalUrl: "/api/notes",
+      originalUrl: "/api/v1/notes",
       user: { id: 1 },
     };
     res = {
@@ -47,7 +47,7 @@ describe("Cache Middleware", () => {
       await middleware(req, res, next);
 
       expect(next).toHaveBeenCalled();
-      expect(mockRedisClient.get).toHaveBeenCalledWith("cache:/api/notes:1");
+      expect(mockRedisClient.get).toHaveBeenCalledWith("cache:/api/v1/notes:1");
     });
 
     it("should return cached data if available", async () => {

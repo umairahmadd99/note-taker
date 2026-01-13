@@ -33,7 +33,7 @@ class NoteService {
     });
 
     // Invalidate user's notes cache (all note-related endpoints)
-    await invalidateCache(`cache:/api/notes*:${userId}`);
+    await invalidateCache(`cache:/api/v1/notes*:${userId}`);
 
     return note;
   }
@@ -252,7 +252,7 @@ class NoteService {
       await transaction.commit();
 
       // Invalidate cache (all note-related endpoints for this user)
-      await invalidateCache(`cache:/api/notes*:${userId}`);
+      await invalidateCache(`cache:/api/v1/notes*:${userId}`);
 
       return note;
     } catch (error) {
@@ -280,7 +280,7 @@ class NoteService {
     await note.destroy(); // Soft delete
 
     // Invalidate cache (all note-related endpoints for this user)
-    await invalidateCache(`cache:/api/notes*:${userId}`);
+    await invalidateCache(`cache:/api/v1/notes*:${userId}`);
 
     return { message: "Note deleted successfully" };
   }
@@ -338,7 +338,7 @@ class NoteService {
       await transaction.commit();
 
       // Invalidate cache (all note-related endpoints for this user)
-      await invalidateCache(`cache:/api/notes*:${userId}`);
+      await invalidateCache(`cache:/api/v1/notes*:${userId}`);
 
       return note;
     } catch (error) {
@@ -393,8 +393,8 @@ class NoteService {
 
     // Invalidate cache for both users
     // Invalidate cache for both owner and shared user
-    await invalidateCache(`cache:/api/notes*:${ownerId}`);
-    await invalidateCache(`cache:/api/notes*:${sharedWithUserId}`);
+    await invalidateCache(`cache:/api/v1/notes*:${ownerId}`);
+    await invalidateCache(`cache:/api/v1/notes*:${sharedWithUserId}`);
 
     return share;
   }
@@ -443,7 +443,7 @@ class NoteService {
 
     // Invalidate cache
     // Invalidate cache for this specific note
-    await invalidateCache(`cache:/api/notes*:${userId}`);
+    await invalidateCache(`cache:/api/v1/notes*:${userId}`);
 
     return attachment;
   }

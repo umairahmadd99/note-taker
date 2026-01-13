@@ -55,7 +55,7 @@ describe("App Integration Tests", () => {
 
   describe("Error Handling", () => {
     it("should handle validation errors", async () => {
-      const response = await request(app).post("/api/auth/register").send({
+      const response = await request(app).post("/api/v1/auth/register").send({
         username: "ab", // Invalid
         email: "invalid-email", // Invalid
         password: "123", // Invalid
@@ -66,7 +66,7 @@ describe("App Integration Tests", () => {
 
     it("should handle JSON parsing errors", async () => {
       const response = await request(app)
-        .post("/api/auth/register")
+        .post("/api/v1/auth/register")
         .set("Content-Type", "application/json")
         .send("invalid json");
 

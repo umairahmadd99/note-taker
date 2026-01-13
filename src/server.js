@@ -30,7 +30,7 @@ app.get("/health", (req, res) => {
   res.json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
-// API routes
+// API routes with versioning
 app.use("/api", routes);
 
 // Error handling middleware

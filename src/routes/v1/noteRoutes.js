@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { noteController, upload } = require("../controllers/noteController");
-const { authenticate } = require("../middleware/auth");
-const { cacheMiddleware } = require("../middleware/cache");
+const { noteController, upload } = require("../../controllers/noteController");
+const { authenticate } = require("../../middleware/auth");
+const { cacheMiddleware } = require("../../middleware/cache");
 const {
   createNoteValidation,
   updateNoteValidation,
-} = require("../validators/noteValidators");
+} = require("../../validators/noteValidators");
 
 // All note routes require authentication
 router.use(authenticate);

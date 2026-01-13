@@ -1,6 +1,6 @@
 const request = require("supertest");
 const express = require("express");
-const noteRoutes = require("../../src/routes/noteRoutes");
+const noteRoutes = require("../../src/routes/v1/noteRoutes");
 const { noteController } = require("../../src/controllers/noteController");
 const { authenticate } = require("../../src/middleware/auth");
 const { generateTestToken, createMockUser } = require("../helpers");
@@ -29,7 +29,7 @@ jest.mock("../../src/middleware/cache", () => ({
 
 const app = express();
 app.use(express.json());
-app.use("/api/notes", noteRoutes);
+app.use("/api/v1/notes", noteRoutes);
 
 describe("Note Routes", () => {
   const mockUser = createMockUser();
@@ -44,7 +44,7 @@ describe("Note Routes", () => {
     });
   });
 
-  describe("POST /api/notes", () => {
+  describe("POST /api/v1/notes", () => {
     it("should create a note", async () => {
       const mockNote = {
         id: 1,
@@ -62,7 +62,7 @@ describe("Note Routes", () => {
       });
 
       const response = await request(app)
-        .post("/api/notes")
+        .post("/api/v1/notes")
         .set("Authorization", `Bearer ${mockToken}`)
         .send({
           title: "Test Note",
@@ -76,7 +76,7 @@ describe("Note Routes", () => {
 
     it("should return 400 for invalid input", async () => {
       const response = await request(app)
-        .post("/api/notes")
+        .post("/api/v1/notes")
         .set("Authorization", `Bearer ${mockToken}`)
         .send({
           title: "",
@@ -87,7 +87,7 @@ describe("Note Routes", () => {
     });
   });
 
-  describe("GET /api/notes", () => {
+  describe("GET /api/v1/notes", () => {
     it("should get all notes", async () => {
       const mockNotes = [
         {
@@ -107,7 +107,7 @@ describe("Note Routes", () => {
       });
 
       const response = await request(app)
-        .get("/api/notes")
+        .get("/api/v1/notes")
         .set("Authorization", `Bearer ${mockToken}`);
 
       expect(response.status).toBe(200);
@@ -117,7 +117,7 @@ describe("Note Routes", () => {
     });
   });
 
-  describe("GET /api/notes/:id", () => {
+  describe("GET /api/v1/notes/:id", () => {
     it("should get note by id", async () => {
       const mockNote = {
         id: 1,
@@ -130,7 +130,7 @@ describe("Note Routes", () => {
       });
 
       const response = await request(app)
-        .get("/api/notes/1")
+        .get("/api/v1/notes/1")
         .set("Authorization", `Bearer ${mockToken}`);
 
       expect(response.status).toBe(200);
@@ -139,7 +139,7 @@ describe("Note Routes", () => {
     });
   });
 
-  describe("PUT /api/notes/:id", () => {
+  describe("PUT /api/v1/notes/:id", () => {
     it("should update a note", async () => {
       const mockNote = {
         id: 1,
@@ -156,7 +156,7 @@ describe("Note Routes", () => {
       });
 
       const response = await request(app)
-        .put("/api/notes/1")
+        .put("/api/v1/notes/1")
         .set("Authorization", `Bearer ${mockToken}`)
         .send({
           title: "Updated Note",
@@ -177,7 +177,7 @@ describe("Note Routes", () => {
       });
 
       const response = await request(app)
-        .put("/api/notes/1")
+        .put("/api/v1/notes/1")
         .set("Authorization", `Bearer ${mockToken}`)
         .send({
           title: "Updated Note",
@@ -188,14 +188,14 @@ describe("Note Routes", () => {
     });
   });
 
-  describe("DELETE /api/notes/:id", () => {
+  describe("DELETE /api/v1/notes/:id", () => {
     it("should delete a note", async () => {
       noteController.deleteNote.mockImplementation((req, res) => {
         res.json({ message: "Note deleted successfully" });
       });
 
       const response = await request(app)
-        .delete("/api/notes/1")
+        .delete("/api/v1/notes/1")
         .set("Authorization", `Bearer ${mockToken}`);
 
       expect(response.status).toBe(200);
@@ -204,7 +204,7 @@ describe("Note Routes", () => {
     });
   });
 
-  describe("GET /api/notes/search", () => {
+  describe("GET /api/v1/notes/search", () => {
     it("should search notes by keywords", async () => {
       const mockNotes = [
         {
@@ -223,7 +223,7 @@ describe("Note Routes", () => {
       });
 
       const response = await request(app)
-        .get("/api/notes/search")
+        .get("/api/v1/notes/search")
         .query({ keywords: "test" })
         .set("Authorization", `Bearer ${mockToken}`);
 
@@ -236,7 +236,7 @@ describe("Note Routes", () => {
     });
   });
 
-  describe("POST /api/notes/:id/revert", () => {
+  describe("POST /api/v1/notes/:id/revert", () => {
     it("should revert note to a version", async () => {
       const mockNote = {
         id: 1,
@@ -253,7 +253,7 @@ describe("Note Routes", () => {
       });
 
       const response = await request(app)
-        .post("/api/notes/1/revert")
+        .post("/api/v1/notes/1/revert")
         .set("Authorization", `Bearer ${mockToken}`)
         .send({ version: 2 });
 
@@ -263,7 +263,7 @@ describe("Note Routes", () => {
     });
   });
 
-  describe("POST /api/notes/:id/share", () => {
+  describe("POST /api/v1/notes/:id/share", () => {
     it("should share note with another user", async () => {
       const mockShare = {
         id: 1,
@@ -280,7 +280,7 @@ describe("Note Routes", () => {
       });
 
       const response = await request(app)
-        .post("/api/notes/1/share")
+        .post("/api/v1/notes/1/share")
         .set("Authorization", `Bearer ${mockToken}`)
         .send({
           sharedWithUserId: 2,
@@ -293,7 +293,7 @@ describe("Note Routes", () => {
     });
   });
 
-  describe("POST /api/notes/:id/attachments", () => {
+  describe("POST /api/v1/notes/:id/attachments", () => {
     it("should add attachment to note", async () => {
       const mockAttachment = {
         id: 1,
@@ -309,7 +309,7 @@ describe("Note Routes", () => {
       });
 
       const response = await request(app)
-        .post("/api/notes/1/attachments")
+        .post("/api/v1/notes/1/attachments")
         .set("Authorization", `Bearer ${mockToken}`)
         .attach("file", Buffer.from("test file content"), "test.jpg");
 
@@ -325,7 +325,7 @@ describe("Note Routes", () => {
         res.status(401).json({ error: "Authentication required" });
       });
 
-      const response = await request(app).get("/api/notes");
+      const response = await request(app).get("/api/v1/notes");
 
       expect(response.status).toBe(401);
       expect(response.body).toHaveProperty("error");

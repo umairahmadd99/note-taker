@@ -1,6 +1,6 @@
 const request = require("supertest");
 const express = require("express");
-const authRoutes = require("../../src/routes/authRoutes");
+const authRoutes = require("../../src/routes/v1/authRoutes");
 const authController = require("../../src/controllers/authController");
 
 // Mock the controller
@@ -8,14 +8,14 @@ jest.mock("../../src/controllers/authController");
 
 const app = express();
 app.use(express.json());
-app.use("/api/auth", authRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 describe("Auth Routes", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe("POST /api/auth/register", () => {
+  describe("POST /api/v1/auth/register", () => {
     it("should register a new user", async () => {
       const mockResponse = {
         message: "User registered successfully",
@@ -32,7 +32,7 @@ describe("Auth Routes", () => {
         res.status(201).json(mockResponse);
       });
 
-      const response = await request(app).post("/api/auth/register").send({
+      const response = await request(app).post("/api/v1/auth/register").send({
         username: "testuser",
         email: "test@example.com",
         password: "password123",
@@ -44,7 +44,7 @@ describe("Auth Routes", () => {
     });
 
     it("should return 400 for invalid input", async () => {
-      const response = await request(app).post("/api/auth/register").send({
+      const response = await request(app).post("/api/v1/auth/register").send({
         username: "ab", // Too short
         email: "invalid-email",
         password: "123", // Too short
@@ -55,7 +55,7 @@ describe("Auth Routes", () => {
     });
   });
 
-  describe("POST /api/auth/login", () => {
+  describe("POST /api/v1/auth/login", () => {
     it("should login user successfully", async () => {
       const mockResponse = {
         message: "Login successful",
@@ -72,7 +72,7 @@ describe("Auth Routes", () => {
         res.json(mockResponse);
       });
 
-      const response = await request(app).post("/api/auth/login").send({
+      const response = await request(app).post("/api/v1/auth/login").send({
         email: "test@example.com",
         password: "password123",
       });
@@ -83,7 +83,7 @@ describe("Auth Routes", () => {
     });
 
     it("should return 400 for invalid input", async () => {
-      const response = await request(app).post("/api/auth/login").send({
+      const response = await request(app).post("/api/v1/auth/login").send({
         email: "invalid-email",
         password: "",
       });
@@ -92,7 +92,7 @@ describe("Auth Routes", () => {
     });
   });
 
-  describe("POST /api/auth/refresh-token", () => {
+  describe("POST /api/v1/auth/refresh-token", () => {
     it("should refresh access token successfully", async () => {
       const mockResponse = {
         accessToken: "new-access-token",
@@ -102,7 +102,7 @@ describe("Auth Routes", () => {
         res.json(mockResponse);
       });
 
-      const response = await request(app).post("/api/auth/refresh-token").send({
+      const response = await request(app).post("/api/v1/auth/refresh-token").send({
         refreshToken: "valid-refresh-token",
       });
 
@@ -117,7 +117,7 @@ describe("Auth Routes", () => {
       });
 
       const response = await request(app)
-        .post("/api/auth/refresh-token")
+        .post("/api/v1/auth/refresh-token")
         .send({});
 
       expect(response.status).toBe(400);

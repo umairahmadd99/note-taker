@@ -113,7 +113,7 @@ A comprehensive Note Taking API built with ExpressJS, MySQL, Redis, and Sequeliz
 #### Register User
 
 ```http
-POST /api/auth/register
+POST /api/v1/auth/register
 Content-Type: application/json
 
 {
@@ -141,7 +141,7 @@ Content-Type: application/json
 #### Login
 
 ```http
-POST /api/auth/login
+POST /api/v1/auth/login
 Content-Type: application/json
 
 {
@@ -153,7 +153,7 @@ Content-Type: application/json
 #### Refresh Token
 
 ```http
-POST /api/auth/refresh-token
+POST /api/v1/auth/refresh-token
 Content-Type: application/json
 
 {
@@ -172,7 +172,7 @@ Authorization: Bearer <accessToken>
 #### Create Note
 
 ```http
-POST /api/notes
+POST /api/v1/notes
 Authorization: Bearer <token>
 Content-Type: application/json
 
@@ -185,28 +185,28 @@ Content-Type: application/json
 #### Get All Notes
 
 ```http
-GET /api/notes
+GET /api/v1/notes
 Authorization: Bearer <token>
 ```
 
 #### Get Note by ID
 
 ```http
-GET /api/notes/:id
+GET /api/v1/notes/:id
 Authorization: Bearer <token>
 ```
 
 #### Search Notes by Keywords
 
 ```http
-GET /api/notes/search?keywords=search+term
+GET /api/v1/notes/search?keywords=term
 Authorization: Bearer <token>
 ```
 
 #### Update Note
 
 ```http
-PUT /api/notes/:id
+PUT /api/v1/notes/:id
 Authorization: Bearer <token>
 Content-Type: application/json
 
@@ -222,14 +222,14 @@ Content-Type: application/json
 #### Delete Note (Soft Delete)
 
 ```http
-DELETE /api/notes/:id
+DELETE /api/v1/notes/:id
 Authorization: Bearer <token>
 ```
 
 #### Revert to Previous Version
 
 ```http
-POST /api/notes/:id/revert
+POST /api/v1/notes/:id/revert
 Authorization: Bearer <token>
 Content-Type: application/json
 
@@ -241,7 +241,7 @@ Content-Type: application/json
 #### Share Note
 
 ```http
-POST /api/notes/:id/share
+POST /api/v1/notes/:id/share
 Authorization: Bearer <token>
 Content-Type: application/json
 
@@ -256,7 +256,7 @@ Content-Type: application/json
 #### Add Attachment
 
 ```http
-POST /api/notes/:id/attachments
+POST /api/v1/notes/:id/attachments
 Authorization: Bearer <token>
 Content-Type: multipart/form-data
 
@@ -315,7 +315,7 @@ For more details, see the [tests/README.md](tests/README.md) file.
 1. **Register a user:**
 
    ```bash
-   curl -X POST http://localhost:3000/api/auth/register \
+   curl -X POST http://localhost:3000/api/v1/auth/register \
      -H "Content-Type: application/json" \
      -d '{"username":"testuser","email":"test@example.com","password":"password123"}'
    ```
@@ -323,14 +323,14 @@ For more details, see the [tests/README.md](tests/README.md) file.
 2. **Login:**
 
    ```bash
-   curl -X POST http://localhost:3000/api/auth/login \
+   curl -X POST http://localhost:3000/api/v1/auth/login \
      -H "Content-Type: application/json" \
      -d '{"email":"test@example.com","password":"password123"}'
    ```
 
 3. **Create a note:**
    ```bash
-   curl -X POST http://localhost:3000/api/notes \
+   curl -X POST http://localhost:3000/api/v1/notes \
      -H "Authorization: Bearer <your-token>" \
      -H "Content-Type: application/json" \
      -d '{"title":"Test Note","content":"This is a test note"}'
@@ -427,9 +427,9 @@ Both connections are initialized once and reused throughout the application life
 ## Caching Strategy
 
 - **Cached Endpoints:**
-  - `GET /api/notes` (5 minutes TTL)
-  - `GET /api/notes/:id` (5 minutes TTL)
-  - `GET /api/notes/search` (5 minutes TTL)
+  - `GET /api/v1/notes` (5 minutes TTL)
+  - `GET /api/v1/notes/:id` (5 minutes TTL)
+  - `GET /api/v1/notes/search` (5 minutes TTL)
 
 - **Cache Invalidation:**
   - On note creation

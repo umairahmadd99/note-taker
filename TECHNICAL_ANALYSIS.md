@@ -133,9 +133,9 @@ MATCH(title, content) AGAINST('keywords' IN NATURAL LANGUAGE MODE)
 
 **Cached Endpoints**:
 
-- `GET /api/notes` - User's notes list
-- `GET /api/notes/:id` - Individual note details
-- `GET /api/notes/search` - Search results
+- `GET /api/v1/notes` - User's notes list
+- `GET /api/v1/notes/:id` - Individual note details
+- `GET /api/v1/notes/search` - Search results
 
 **Cache Key Pattern**: `cache:<endpoint>:<userId>`
 
