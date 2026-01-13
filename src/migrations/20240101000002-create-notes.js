@@ -1,65 +1,66 @@
-'use strict';
+"use strict";
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('notes', {
+    await queryInterface.createTable("notes", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'users',
-          key: 'id'
+          model: "users",
+          key: "id",
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       title: {
         type: Sequelize.STRING(255),
-        allowNull: false
+        allowNull: false,
       },
       content: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
       },
       version: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 1
+        defaultValue: 1,
       },
       deletedAt: {
         type: Sequelize.DATE,
-        allowNull: true
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
-      }
+        defaultValue: Sequelize.literal(
+          "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+        ),
+      },
     });
 
     // Add indexes
-    await queryInterface.addIndex('notes', ['userId']);
-    await queryInterface.addIndex('notes', ['deletedAt']);
-    
+    await queryInterface.addIndex("notes", ["userId"]);
+    await queryInterface.addIndex("notes", ["deletedAt"]);
+
     // Add full-text index for search
     await queryInterface.sequelize.query(
-      'ALTER TABLE notes ADD FULLTEXT INDEX ft_search (title, content)'
+      "ALTER TABLE notes ADD FULLTEXT INDEX ft_search (title, content)"
     );
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('notes');
-  }
+    await queryInterface.dropTable("notes");
+  },
 };
-

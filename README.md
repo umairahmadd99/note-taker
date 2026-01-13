@@ -63,7 +63,6 @@ A comprehensive Note Taking API built with ExpressJS, MySQL, Redis, and Sequeliz
    ```
 
    This will:
-
    - Build the application container
    - Start MySQL and Redis containers
    - Run database migrations
@@ -91,7 +90,6 @@ A comprehensive Note Taking API built with ExpressJS, MySQL, Redis, and Sequeliz
    Update `.env` with your local database and Redis configurations.
 
 3. **Start MySQL and Redis**
-
    - MySQL: Ensure MySQL is running on port 3306
    - Redis: Ensure Redis is running on port 6379
 
@@ -429,7 +427,6 @@ Both connections are initialized once and reused throughout the application life
 ## Caching Strategy
 
 - **Cached Endpoints:**
-
   - `GET /api/notes` (5 minutes TTL)
   - `GET /api/notes/:id` (5 minutes TTL)
   - `GET /api/notes/search` (5 minutes TTL)

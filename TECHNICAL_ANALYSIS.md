@@ -45,7 +45,6 @@ The task required building a Note Taking API with the following key challenges:
 2. **Soft Deletion**: Implemented using Sequelize's `paranoid` option, which adds a `deletedAt` timestamp. This preserves historical data while allowing logical deletion.
 
 3. **Versioning Strategy**:
-
    - Each note maintains a `version` integer field
    - A separate `note_versions` table stores historical snapshots
    - Every update creates a new version record
@@ -225,7 +224,6 @@ MATCH(title, content) AGAINST('keywords' IN NATURAL LANGUAGE MODE)
 **Applied to**:
 
 1. **DatabaseConnection**: Ensures single Sequelize instance
-
    - Prevents connection pool exhaustion
    - Centralizes database configuration
    - Reusable across application
@@ -323,15 +321,12 @@ class DatabaseConnection {
 #### Current Limitations
 
 1. **Database**: Single MySQL instance
-
    - **Solution**: Read replicas, sharding for very large scale
 
 2. **Redis**: Single instance
-
    - **Solution**: Redis Cluster for high availability
 
 3. **File Storage**: Local filesystem
-
    - **Solution**: Cloud storage (S3, GCS)
 
 4. **Application**: Single instance
@@ -340,19 +335,16 @@ class DatabaseConnection {
 #### Scalability Improvements
 
 1. **Database**:
-
    - Implement read replicas for read-heavy workloads
    - Consider partitioning for very large tables
    - Connection pooling (already implemented)
 
 2. **Caching**:
-
    - Implement cache warming strategies
    - Use Redis Cluster for high availability
    - Consider CDN for static assets
 
 3. **Search**:
-
    - Migrate to Elasticsearch for advanced search needs
    - Implement search result caching
    - Consider search indexing queue
