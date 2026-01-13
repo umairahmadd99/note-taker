@@ -20,6 +20,7 @@ A comprehensive Note Taking API built with ExpressJS, MySQL, Redis, and Sequeliz
 - ✅ **Note Sharing**: Share notes with other users with read/edit permissions
 - ✅ **Multimedia Attachments**: Attach images and videos to notes
 - ✅ **Refresh Token Mechanism**: Enhanced session management with refresh tokens
+- ✅ **Comprehensive Test Suite**: Unit tests, integration tests, and route tests with Jest
 
 ## Tech Stack
 
@@ -267,9 +268,51 @@ file: <file>
 **Supported file types:** Images (JPEG, PNG, GIF, WebP) and Videos (MP4, MPEG, QuickTime)
 **Max file size:** 10MB (configurable via `MAX_FILE_SIZE`)
 
-## Testing the API
+## Testing
 
-### Using cURL
+### Running Tests
+
+The project includes a comprehensive test suite covering unit tests, integration tests, and route tests.
+
+**Run all tests:**
+
+```bash
+npm test
+```
+
+**Run tests in watch mode:**
+
+```bash
+npm test -- --watch
+```
+
+**Run tests with coverage:**
+
+```bash
+npm test -- --coverage
+```
+
+**Run a specific test file:**
+
+```bash
+npm test -- tests/controllers/authController.test.js
+```
+
+The test suite covers:
+
+- Controllers (auth and notes)
+- Services (business logic)
+- Middleware (authentication and caching)
+- Validators (input validation)
+- Utils (JWT utilities)
+- Routes (API endpoints)
+- Integration tests
+
+For more details, see the [tests/README.md](tests/README.md) file.
+
+### Testing the API Manually
+
+#### Using cURL
 
 1. **Register a user:**
 
@@ -295,7 +338,7 @@ file: <file>
      -d '{"title":"Test Note","content":"This is a test note"}'
    ```
 
-### Using Postman
+#### Using Postman
 
 Import the API collection (if available) or manually test endpoints using the examples above.
 
@@ -456,7 +499,17 @@ note-taker/
 │   │   └── noteService.js   # Business logic
 │   ├── utils/
 │   │   └── jwt.js           # JWT utilities
+│   ├── validators/          # Input validation
 │   └── server.js            # Application entry point
+├── tests/                   # Test suite
+│   ├── controllers/         # Controller tests
+│   ├── services/            # Service tests
+│   ├── middleware/          # Middleware tests
+│   ├── validators/          # Validator tests
+│   ├── utils/               # Utility tests
+│   ├── routes/              # Route tests
+│   ├── integration/         # Integration tests
+│   └── README.md            # Test documentation
 ├── uploads/                 # File uploads directory
 ├── .env.example
 ├── .gitignore
